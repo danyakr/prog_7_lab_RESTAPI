@@ -1,1 +1,1 @@
-# prog_7_lab_RESTAPI
+# Лабораторная работа - Разработка REST API и работа с OpenAPI
