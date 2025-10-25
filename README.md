@@ -91,30 +91,11 @@ uvicorn main:app --reload
 
 #### Успешное создание
 
-**Тестовые данные:**
-```json
-{
-  "title": "Анна Каренина",
-  "author": "Лев Толстой",
-  "year": 1877,
-  "isbn": "9785170654321"
-}
-```
-
 **Результат:** Книга успешно создана, присвоен ID 4, код состояния 201 Created
 
 ![Успешное создание](https://github.com/user-attachments/assets/e990d6e4-d5e9-49f9-8db7-66f0c2ba86fe)
 
 #### Проверка валидации
-
-**Тестовые данные с ошибкой:**
-```json
-{
-  "title": "Тест",
-  "author": "Автор",
-  "year": 3000
-}
-```
 
 **Результат:** Получена ошибка валидации 422 Unprocessable Entity — год превышает допустимое значение
 
@@ -425,108 +406,4 @@ sqlalchemy==2.0.23
 ```
 
 ---
-
-**Дата выполнения:** 2025
-
-**Статус:** Работа выполнена полностью, все задания реализованы и протестированы
-
-
-
-
-
-
-
-
-# Лабораторная работа - Разработка REST API и работа с OpenAPI
-pip install fastapi uvicorn[standard] pydantic
-
-Создание файла main.py
-
-uvicorn main:app --reload
-
-<img width="1898" height="964" alt="image" src="https://github.com/user-attachments/assets/9893b724-39c1-4a59-a831-65b12a058197" />
-
-<img width="1903" height="963" alt="image" src="https://github.com/user-attachments/assets/279acb42-ce4b-4a71-bcf8-beb9076091a6" />
-
-Чтение (Read) всей коллекции
-GET /api/books
-<img width="1798" height="907" alt="image" src="https://github.com/user-attachments/assets/9b7ef5a4-fd3b-4822-9bf2-3b5404f691eb" />
-
-Создание (Create) нового ресурса
-POST /api/books
-Успешное создание (Проверка кода 201)
-<img width="1778" height="824" alt="image" src="https://github.com/user-attachments/assets/e990d6e4-d5e9-49f9-8db7-66f0c2ba86fe" />
-
-Проверка валидации (Проверка кода 422)
-<img width="1779" height="911" alt="image" src="https://github.com/user-attachments/assets/feb285db-4653-4451-95da-13dc34b758a6" />
-
-Обновление (Update) ресурса по ID (PUT и PATCH)
-Полное обновление (PUT /api/books/{book_id})
-<img width="1783" height="825" alt="image" src="https://github.com/user-attachments/assets/146edd60-d4bc-4fe1-94a4-0e2784935da0" />
-
-
-Частичное обновление (PATCH /api/books/{book_id})
-<img width="1773" height="773" alt="image" src="https://github.com/user-attachments/assets/8468035b-53b0-4d37-8616-f5831513c43d" />
-
-Удаление (Delete) ресурса (DELETE /api/books/{book_id})
-<img width="1769" height="808" alt="image" src="https://github.com/user-attachments/assets/4d096b6b-54f1-4afd-85b2-443a6367b38b" />
-
-
-Изучение OpenAPI спецификации (Задание 2.8)
-<img width="1749" height="964" alt="image" src="https://github.com/user-attachments/assets/43d61e13-fda5-440c-b424-6a2c48b1c6b0" />
-
-Расширение API (Задание 2.9)
-заменить существующую функцию get_books в вашем файле main.py на новую версию, которая принимает параметры запроса (author, year_from, year_to) и применяет логику фильтрации к вашему временному хранилищу books_db
-<img width="1793" height="894" alt="image" src="https://github.com/user-attachments/assets/576061e6-ac2c-49e2-b18e-ae26af221115" />
-
-
-Тестирование:
-• GET /api/books?author=толстой - должны вернуться книги Льва Толстого
-<img width="1774" height="741" alt="image" src="https://github.com/user-attachments/assets/85146eb4-724c-4702-b63c-e7f89ba494e7" />
-
-• GET /api/books?year_from=1860&year_to=1870 - книги, изданные в 1860-1870 годах
-<img width="1762" height="871" alt="image" src="https://github.com/user-attachments/assets/8456377d-2912-42f4-abfb-4b9eaf496941" />
-
-2.9.2. Добавление пагинации
-Новые параметры пагинации будут добавлены в сигнатуру функции с значениями по умолчанию (skip=0, limit=10). Логика среза списка (filtered_books[skip:skip + limit]) будет применена после выполнения всей фильтрации.
-
-<img width="1617" height="900" alt="image" src="https://github.com/user-attachments/assets/93d45358-ef85-46b4-9757-845034f29d40" />
-
-GET /api/books?skip=1&limit=2
-<img width="1597" height="767" alt="image" src="https://github.com/user-attachments/assets/04e4c70c-b8b4-4049-a5bd-c540a6a6e3f8" />
-
-GET /api/books?author=толстой&limit=1 вернет только первую книгу Толстого
-<img width="1590" height="650" alt="image" src="https://github.com/user-attachments/assets/00416fc3-4653-47d0-bdac-c614cf82f5b4" />
-
-2.9.3. Добавление статистики
-<img width="1722" height="723" alt="image" src="https://github.com/user-attachments/assets/d132d339-c27c-4e44-9e23-d222777e19f7" />
-
-GET /api/books/stats
-<img width="1589" height="684" alt="image" src="https://github.com/user-attachments/assets/05ab15e1-9da6-49ca-9e7a-7a301f00189f" />
-
-2.10. Задание 5: Добавление базы данных SQLite
-Цель: Заменить временное хранилище данных в памяти на постоянную базу данных SQLite для обеспечения сохранения данных между сеансами работы API.
-
-Реализация:
-
-Настройка базы данных: Создан файл database.py для конфигурации подключения к SQLite, определения ORM-модели BookDB с использованием SQLAlchemy и автоматического создания таблицы books.
-
-Инициализация данных: Обеспечено автоматическое заполнение базы данных начальными книгами при первом запуске.
-
-Интеграция с FastAPI: Все эндпоинты в main.py (CRUD, фильтрация, статистика) модифицированы для использования механизма внедрения зависимостей (Depends(get_db)). Это позволяет получать сессию SQLAlchemy для каждого запроса, выполняя необходимые операции с данными (запросы, добавление, обновление, удаление) и гарантируя автоматическое закрытие соединения.
-
-Результат: API переведено на промышленное хранение данных, что обеспечивает полноценную работу с persistent data (постоянными данными).
-
-2.11. Задание 6: Добавление аутентификации
-
-GET /api/books должен работать без ключа, возвращая код 200.
-<img width="1585" height="804" alt="image" src="https://github.com/user-attachments/assets/db972f01-8e6a-4510-ae93-442d510e195a" />
-
-POST /api/books без ключа (403 Forbidden)
-<img width="1593" height="685" alt="image" src="https://github.com/user-attachments/assets/f7e54d77-e44d-4d03-9ebb-1b7ce3701a6a" />
-
-POST /api/books с ключом
-<img width="725" height="342" alt="image" src="https://github.com/user-attachments/assets/c9655d59-c48e-4dfd-b157-3939c202317a" />
-<img width="1588" height="723" alt="image" src="https://github.com/user-attachments/assets/cd0fdbf7-20ba-41aa-af00-35d547dedeb8" />
-
 
